@@ -1,3 +1,22 @@
+/*
+AUTORES: Lechuga Canales Hector Jair y Manrique Abad Josue Rafael
+VERSIÓN: 1.5
+
+DESCRIPCIÓN: Simulacion de la atencion a clientes de un supermercado
+Se abrira un cierto numero de cajas y cada cierto toempo un cliente llegara, 
+cada caja tendra un tiempo determinado para atender, el programa podra finalizar 
+si ya se atendio como minimo al cliente 100 y no hay mas clientes formados en las cajas.
+
+OBSERVACIONES: Se puede emplear la libreria TADColaEst.h, TADPilaEstCir.h o TADColaDin.h implementadas
+en clase. Ambas estructuras elemento, ya sea la de las implementaciónes estáticas o dinámica deberán 
+tener un campo int n;
+
+COMPILACIÓN: 	gcc -o Super Super.c TADCola/TADCola(Din|Est|EstCirc).o (Si se tiene el objeto de la implementación)
+				gcc -o Super Super.c TADCola/TADCola(Din|Est|EstCirc).c (Si se tiene el fuente de la implementación)
+
+EJECUCIÓN: Super.exe (En Windows)
+*/
+//LIBRERAS
 #include <time.h>
 #include <stdio.h>
 #include <windows.h>			
@@ -16,7 +35,7 @@ int main(void)
 	//Inicializar la función rand
 	srand(time(NULL));
 	printf("Walmart\n");
-	printf("Cajas abiertas: \t");
+	printf("Cajas abiertas:");
 	scanf("%d",&NumCajas);
 	//Crear colas
 	cola cajera[NumCajas];
@@ -29,7 +48,7 @@ int main(void)
 	{
 		for(i=0;i<NumCajas;i++)
 		{	
-			printf("Tiempo de atencion de cajera %d\t",i+1);
+			printf("Tiempo de atencion de cajera %d:",i+1);
 			scanf("%d",&atencion[i]);
 			if(atencion[i] % 10!=0)
 			{
@@ -37,7 +56,7 @@ int main(void)
 				exit(1);
 			}
 		}
-		printf("Tiempo de llegada de cada cliente\t");
+		printf("Tiempo de llegada de cada cliente: ");
 		scanf("%d",&LlegadaCliente);
 		if(LlegadaCliente % 10!=0)
 		{
@@ -58,7 +77,7 @@ int main(void)
 				{
 					Sleep(TIEMPO_BASE);
 					e = Dequeue(&cajera[i]);
-					printf("\n\n\nAtendi a: %d en caja %d", e.n,i);
+					printf("\n\n\nAtendi a: %d en caja %d", e.n,i+1);
 				}
 		}
 		//Si el tiempo es multiplo del de llegada de los clientes
@@ -69,7 +88,7 @@ int main(void)
 			e.n = cliente;			//Dar el numero que identifica al cliente
 			fila=rand()%NumCajas;	//Escoger la fila para formarse aleatoriamente					
 			Queue(&cajera[fila], e);//Formarse en la fila seleccionada
-			printf("\n\n\nLlego el cliente: %d a la cola de la caja %d", e.n,fila);
+			printf("\n\n\nLlego el cliente: %d a la cola de la caja %d", e.n,fila+1);
 			meta+=e.n;
 		}
 		if(meta>=100)
